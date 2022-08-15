@@ -2,21 +2,24 @@
 #テストは
 # gitlab-runner exec docker pages
 
-image: node:slim  #18-bullseye
+image: debian:latest
 
 variables:
  DEBIAN_FRONTEND: "noninteractive"
  DEBCONF_NONINTERACTIVE_SEEN: "true"
-
+ 
 pages:
   stage: deploy
   script:
   - apt update -q
   - apt upgrade -q -y
-  - apt install -q -y --no-install-recommends pdftk
-  - ./mkpdf.sh
+  - apt install -q -y --no-install-recommends make pandoc wkhtmltopdf xvfb xauth fonts-noto fonts-noto-mono fonts-noto-cjk
+  #fonts-ipaexfont fonts-ipafont fonts-ipafont-nonfree-jisx0208
+  #fonts-noto-cjk-extra (from buster)
+  - make
   - mkdir -p public
-  - cp quick_learning_symbol.pdf public/
+  - cp -p quick_learning_symbol.html public/ && chmod 644 public/quick_learning_symbol.html
+  - cp -p quick_learning_symbol.pdf public/ && chmod 644 public/quick_learning_symbol.pdf
   artifacts:
     paths:
     - public

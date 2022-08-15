@@ -1,5 +1,7 @@
 *.pdf
 node_modules/
+quick_learning_symbol.html
+quick_learning_symbol.pdf
 
 # Created by https://www.toptal.com/developers/gitignore/api/Windows,MacOS,emacs
 # Edit at https://www.toptal.com/developers/gitignore?templates=Windows,MacOS,emacs
