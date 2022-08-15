@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+#テストは
+# gitlab-runner exec docker pages
+
+image: node:slim  #18-bullseye
+
+variables:
+ DEBIAN_FRONTEND: "noninteractive"
+ DEBCONF_NONINTERACTIVE_SEEN: "true"
+
+pages:
+  stage: deploy
+  script:
+  - apt update -q
+  - apt upgrade -q -y
+  - apt install -q -y --no-install-recommends pdftk
+  - ./mkpdf.sh
+  - mkdir -p public
+  - cp quick_learning_symbol.pdf public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - pdf
